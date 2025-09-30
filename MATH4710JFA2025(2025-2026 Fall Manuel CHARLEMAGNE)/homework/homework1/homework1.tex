@@ -1,0 +1,368 @@
+% MATH471 Homework LaTeX Template
+% Compile with: pdflatex MATH471_homework_template.tex (or xelatex/lualatex)
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,top=25mm,bottom=25mm}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[linesnumbered,ruled,longend]{algorithm2e}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKwProg{Fn}{Function}{\string:}{end}
+\SetKwFunction{algohw}{AlgoHw}
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% Homework-specific environments
+\newcounter{problem}
+\newenvironment{problem}[1][]{\refstepcounter{problem}\par\medskip
+\noindent{\bf Problem~\theproblem.}\ifx\relax#1\relax\else\ (#1)\fi\newline
+}{\medskip}
+
+\newenvironment{solution}{\par\noindent{\it Solution.} }{\hfill $\square$ \par}
+
+% Header / Footer
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{MATH4710J --- Numerical Methods}
+\chead{}
+\rhead{Homework \#\hwnumber}
+\lfoot{Student: \studentname}
+\cfoot{\thepage}
+\rfoot{October 1st, 2025}
+
+% User commands (edit these in document body)
+\newcommand{\coursenum}{MATH4710J}
+\newcommand{\coursename}{Numerical Methods}
+\newcommand{\instructor}{Manuel CHARLEMAGNE}
+\newcommand{\studentname}{Zhengwei Gong}
+\newcommand{\studentid}{523370910228}
+\newcommand{\hwnumber}{1}
+
+% Shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% Document
+\begin{document}
+
+% Title block (edit fields below)
+\begin{center}
+  {\Large \textbf{Homework \#\hwnumber}}\\[6pt]
+  {\large \textbf{\coursenum\ --- \coursename}}\\[4pt]
+  {Instructor: Manuel CHARLEMAGNE}\\[4pt]
+  {Student: \studentname\ (ID:\@ \studentid)}\\[4pt]
+  {Due date: October 1st, 2025}
+\end{center}
+
+\vspace{8pt}
+\hrule
+\vspace{12pt}
+
+% Example problems
+\begin{problem}
+\begin{itemize}
+\item[1. ] Prove that $\mathbb{N}$, $\mathbb{Z}$, and $\mathbb{Q}$ have the same number of elements.
+\item[2. ] Prove that [0, 1] has as many elements as $\mathbb{R}$.
+\item[3. ] Prove that [0, 1] has more elements than $\mathbb{N}$. Hint: understand Cantor's diagonal argument.
+\end{itemize}
+\begin{solution}
+\begin{itemize}
+  \item[1. ] \textbf{$\mathbb{N}$, $\mathbb{Z}$, and $\mathbb{Q}$ have the same number of elements}\\
+ We want to show that the sets of natural numbers $\mathbb{N}$, integers $\mathbb{Z}$, and rational numbers $\mathbb{Q}$ are all countably infinite, i.e., there exists a bijection between each pair.
+
+\textbf{Step 1: $\mathbb{N}$ and $\mathbb{Z}$ have the same cardinality.}
+
+Define a function $f: \mathbb{N} \to \mathbb{Z}$ by
+\[
+f(n) = \begin{cases}
+\phantom{-}\frac{n}{2} & \text{if $n$ is even} \\
+-\frac{n-1}{2} & \text{if $n$ is odd}
+\end{cases}
+\]
+This function lists the integers in the order $0, 1, -1, 2, -2, 3, -3, \ldots$ as $n$ increases. It is a bijection, so $|\mathbb{N}| = |\mathbb{Z}|$.
+\textbf{Step 2: $\mathbb{N}$ and $\mathbb{Q}$ have the same cardinality.}
+
+Every rational number can be written as $p/q$ with $p \in \mathbb{Z}$, $q \in \mathbb{N}$, and $\gcd(p,q)=1$. Arrange all such pairs $(p,q)$ in a grid and enumerate them diagonally (Cantor's diagonal argument), skipping duplicates and zero denominators. This process lists all rationals in a sequence, showing that $\mathbb{Q}$ is countable.
+
+Therefore, there exist bijections $\mathbb{N} \leftrightarrow \mathbb{Z} \leftrightarrow \mathbb{Q}$, so all three sets have the same number of elements.
+\item[2.] \textbf{[0, 1] has as many elements as $\mathbb{R}$}\\
+To show that the interval [0, 1] has the same cardinality as $\mathbb{R}$, we can construct a bijection between these two sets.
+Consider the function $f: (0, 1) \to \mathbb{R}$ defined by
+\[f(x) = \tan\left(\pi x - \frac{\pi}{2}\right)\]
+This function maps the open interval (0, 1) onto the entire real line $\mathbb{R}$. To include the endpoints 0 and 1, we can extend this function by defining:
+\[f(0) = -\infty, \quad f(1) = +\infty\]
+This shows that there is a bijection between [0, 1] and $\mathbb{R}$, hence they have the same cardinality.
+
+\item[3.] \textbf{[0, 1] has more elements than $\mathbb{N}$}\\
+To show that the interval [0, 1] has more elements than $\mathbb{N}$, we can use Cantor's diagonal argument.
+Assume, for the sake of contradiction, that there is a bijection between $\mathbb{N}$ and [0, 1]. This means we can list all numbers in [0, 1] as a sequence:
+\[
+x_1, x_2, x_3, \ldots
+\]
+where each $x_i$ is represented in its decimal expansion. Now, we construct a new number $y$ in [0, 1] by changing the $i$-th digit of $x_i$ to a different digit (for example, if the $i$-th digit is 5, change it to 6; if it's 9, change it to 0, etc.). This new number $y$ differs from each $x_i$ in at least one decimal place, meaning $y$ cannot be in the list.
+This contradiction shows that there is no bijection between $\mathbb{N}$ and [0, 1], hence [0, 1] has more elements than $\mathbb{N}$.
+\end{itemize}
+\end{solution}
+\end{problem}
+
+\begin{problem}
+\begin{itemize}
+  \item[1.] Prove the Cauchy-Schwarz inequality (1.20|1.39) over the complex numbers.
+  \item[2.] Show that a distance is always positive.
+\end{itemize}
+\begin{solution}
+  \begin{itemize}
+    \item[1.] \textbf{Cauchy-Schwarz Inequality:}
+\[
+\bigl|\langle x,y\rangle\bigr| \le \|x\|\,\|y\|,\qquad x,y\in V,
+\]
+
+\textbf{Proof:}
+\begin{align}
+0 &\le \langle x-\lambda y,\;x-\lambda y\rangle \\
+  &= \langle x,x\rangle -\overline{\lambda}\langle y,x\rangle -\lambda\langle x,y\rangle + |\lambda|^2\langle y,y\rangle.
+\end{align}
+Take $\displaystyle \lambda=\frac{\langle y,x\rangle}{\langle y,y\rangle}$ (when $y\neq 0$), we have
+\[
+0 \le \langle x,x\rangle - \frac{|\langle x,y\rangle|^2}{\langle y,y\rangle},
+\]
+from which it follows that  
+\[
+|\langle x,y\rangle|^2 \le \langle x,x\rangle\,\langle y,y\rangle,
+\]
+and hence
+\[
+|\langle x,y\rangle| \le \|x\|\,\|y\|.
+\]
+
+which is the Cauchy-Schwarz inequality.
+\item[2. ]
+\textbf{Distance is Always Positive:}
+
+A distance function $d: X \times X \to \mathbb{R}$ on a set $X$ must satisfy the following properties for all $x, y, z \in X$:
+\\1. $d(x, y) = 0$ if and only if $x = y$.
+\\2. Symmetry: $d(x, y) = d(y, x)$.
+\\3. Triangle inequality: $d(x, z) \leq d(x, y) + d(y, z)$.
+\\
+\textbf{Proof}
+\\
+\[\forall x, y \in X, d(x, y) + d(y, x) = 2 d(x, y) \geq d(x, x) = 0\]
+\end{itemize}
+\end{solution}
+\end{problem}
+
+% If you have multiple parts
+\begin{problem}
+\begin{enumerate}
+  \item  Let $f$ be a linear map from a vector space $V_1$ into a vector space $V_2$. Show that the dimension
+of $V_1$ is the sum of the dimensions of the kernel and of the image of $f$. This result is called the
+\textbf{rank-nullity theorem}.
+  \item  Prove that the composition of two linear maps is a linear map.
+  \item  Prove that the inverse of a linear map is a linear map.
+\end{enumerate}
+\begin{solution}
+\begin{enumerate}
+  \item Let $f: V_1 \to V_2$ be a linear map. We want to show that
+  \[\dim(V_1) = \dim(\ker(f)) + \dim(\text{im}(f)).\]
+  Let $\{v_1, v_2, \ldots, v_k\}$ be a basis for $\ker(f)$. We can extend this basis to a basis for $V_1$ by adding vectors $\{v_{k+1}, v_{k+2}, \ldots, v_n\}$ such that $\{v_1, v_2, \ldots, v_n\}$ is a basis for $V_1$. The images of the added vectors under $f$, $\{f(v_{k+1}), f(v_{k+2}), \ldots, f(v_n)\}$, form a basis for $\text{im}(f)$ (Since $\{f(v_{k+1}), f(v_{k+2}), \ldots, f(v_n)\}$ can't be 0 unless $v_{k+1}, v_{k+2}, \ldots, v_n$ are in $\ker(f)$). Therefore, we have
+  \[\dim(V_1) = n = k + (n - k) = \dim(\ker(f)) + \dim(\text{im}(f)).\]
+  \item Let $f: V_1 \to V_2$ and $g: V_2 \to V_3$ be linear maps. We want to show that the composition $g \circ f: V_1 \to V_3$ is linear. For any $u, v \in V_1$ and scalar $c$, we have
+  \[(g \circ f)(u + v) = g(f(u + v)) = g(f(u) + f(v)) = g(f(u)) + g(f(v)) = (g \circ f)(u) + (g \circ f)(v),\]
+  and
+  \[(g \circ f)(cu) = g(f(cu)) = g(cf(u)) = c g(f(u)) = c (g \circ f)(u).\]
+  Thus, $g \circ f$ is linear.
+  \item Let $f: V_1 \to V_2$ be a bijective linear map. We want to show that the inverse map $f^{-1}: V_2 \to V_1$ is linear. For any $f(u), f(v) \in V_2$ and scalar $c$, we have
+  \[f^{-1}(f(u) + f(v)) = f^{-1}(f(u + v)) = u + v = f^{-1}(f(u)) + f^{-1}(f(v)) ,\]
+  and
+  \[f^{-1}(c(f(u))) = f^{-1}(f(cu)) = cu = c f^{-1}(f(u)).\]
+  And since $f$ is bijective, every element in $V_2$ can be written as $f(u)$ for some $u \in V_1$.
+  Thus, $f^{-1}$ is linear.
+  
+\end{enumerate}
+\end{solution}
+\end{problem}
+
+
+\begin{problem}
+Intuitively a complete space has “no point missing” anywhere. In particular it means that any Cauchy
+sequence converges inside the space. In this exercise we show that $e$ is not rational while we can find a
+Cauchy sequence of rationals converging to $e$.
+\begin{enumerate}
+  \item Show that $e$ is irrational.
+  \item Show that the sequence ${(u_n)}_{n \in \mathbb{N}}$ defined by $u_n = {(1 + \frac{1}{n})}^n$ is a Cauchy sequence converging to $e$.
+  \item Is $\mathbb{Q}$ complete? Explain.
+\end{enumerate}
+\begin{solution}
+\begin{enumerate}
+  \item To show that $e$ is irrational, we can use a proof by contradiction. Assume that $e$ is rational, i.e., $e = \frac{p}{q}$ for some integers $p$ and $q$. Consider the series expansion of $e$:
+  \[
+  e = \sum_{n=0}^{\infty} \frac{1}{n!} = 1 + 1 + \frac{1}{2!} + \frac{1}{3!} + \cdots
+  \]
+  Multiplying both sides by $q$!, we get
+  \[
+  q! e = q! \left(1 + 1 + \frac{1}{2!} + \frac{1}{3!} + \cdots\right) = q! + q! + \frac{q!}{2!} + \frac{q!}{3!} + \cdots
+  \]
+  The left side is an integer since $e = \frac{p}{q}$ and $q! e = p (q-1)$!. However, the right side is not an integer because the terms $\frac{q!}{n!}$ for $n > q$ are not integers. This leads to a contradiction, hence $e$ is irrational.
+  
+  \item
+Let
+\[
+a_n=\Bigl(1+\frac{1}{n}\Bigr)^n,\qquad n\ge1,
+\]
+and define the function
+\[
+f(x)=x\ln\!\Bigl(1+\frac{1}{x}\Bigr),\qquad x\ge1.
+\]
+Notice that for integer $n$ we have $f(n)=\ln a_n$.
+To show that $\{a_n\}$ is increasing, it suffices to prove that $f$ is increasing on $[1,\infty)$.
+
+Let $u=1/x>0$. Then
+\[
+f'(x)=\ln(1+u)+x\cdot\frac{1}{1+u}\cdot\frac{du}{dx}.
+\]
+Since $u=1/x$, we have $du/dx=-1/x^2=-u^2$. Substitution yields
+\[
+f'(x)=\ln(1+u)-\frac{u}{1+u}.
+\]
+Define $g(u)=\ln(1+u)-\tfrac{u}{1+u}$. Then
+\[
+g'(u)=\frac{1}{1+u}-\frac{1}{(1+u)^2}=\frac{u}{(1+u)^2}>0 \qquad (u>0),
+\]
+and $g(0)=0$. Hence $g(u)>0$ for all $u>0$, so $f'(x)>0$ for $x>0$. Therefore $f$ is increasing, and thus $\ln a_n=f(n)$ is increasing in $n$, i.e. $\{a_n\}$ is monotone increasing.
+
+Next, we provide an upper bound. Using the inequality $\ln(1+t)\le t$ valid for $t>-1$, we obtain for $t=1/n$:
+\[
+\ln a_n = n\ln\Bigl(1+\frac{1}{n}\Bigr) \le n\cdot\frac{1}{n}=1.
+\]
+Therefore $a_n\le e^1=e$ for all $n$. Consequently, the sequence $\{a_n\}$ is monotone increasing and bounded above by $e$. By the monotone convergence theorem for real numbers, $\{a_n\}$ converges in $\mathbb{R}$.
+
+Finally, in the metric space $(\mathbb{R},|\cdot|)$, every convergent sequence is Cauchy. Hence $\{a_n\}$ is a Cauchy sequence.
+
+\item The set of rational numbers $\mathbb{Q}$ is not complete. A metric space is said to be complete if every Cauchy sequence in that space converges to a limit that is also within the same space. However, there exist Cauchy sequences of rational numbers that converge to irrational numbers, which are not in $\mathbb{Q}$. For example, the sequence defined by $a_n = (1 + \frac{1}{n})^n$ converges to $e$, which is irrational. Since $e \notin \mathbb{Q}$, this shows that $\mathbb{Q}$ is not complete. 
+\\
+For simpler example, consider the sequence defined by $b_n = 3.1, 3.14, 3.141, 3.1415, \ldots$, which converges to $\pi$. Since $\pi$ is irrational and not in $\mathbb{Q}$, this is another example of a Cauchy sequence in $\mathbb{Q}$ that does not converge to a limit in $\mathbb{Q}$. Thus, $\mathbb{Q}$ is not a complete metric space.
+
+\end{enumerate}
+\end{solution}
+\end{problem}
+
+\begin{problem}
+  1. Write the pseudocode for at least one the following strategy to approximate $\pi$.
+  \begin{enumerate}[label = (\alph*)]
+    \item The polygons method;
+    \item Machin's formula $\frac{\pi}{4} = 4 \arctan \frac{1}{5} - \arctan \frac{1}{239}$
+    and Taylor series;
+  \end{enumerate}
+2. Implement at least one of the previous algorithms in MATLAB.
+\end{problem}\\
+
+\begin{solution}\\
+
+\begin{enumerate}
+  \item 
+  \begin{itemize}
+  \item[a)] For the unit circle (radius 1), the side length of an inscribed regular $n$-gon is
+\[
+c_n = 2\sin\frac{\pi}{n},\quad\text{so}\quad p_n = n c_n = 2n\sin\frac{\pi}{n}
+\]
+is the inscribed polygon perimeter. The perimeter of the circumscribed regular $n$-gon is
+\[
+P_n = 2n\tan\frac{\pi}{n}.
+\]
+Thus
+\[
+n\sin\frac{\pi}{n}\le \pi \le n\tan\frac{\pi}{n}.
+\]
+
+% Doubling formula for the inscribed polygon side
+If we double the number of sides, the inscribed side lengths satisfy
+\[
+c_{2n}=2\sin\frac{\pi}{2n}= \sqrt{\,2-2\sqrt{\,1-\dfrac{c_n^2}{4}\,}\, }.
+\]
+Consequently
+\[
+p_{2n}=2n\,c_{2n}.
+\]
+Repeating the doubling step yields arbitrarily tight bounds for $\pi$.\\
+
+\begin{algorithm}[H]
+\Input{number of sides $n$ (initially 6), number of iterations $k$}
+\Output{approximation of $\pi$}
+\BlankLine
+\Fn{\algohw{n, k}}{
+$c_n \leftarrow 2\sin(\pi/n)$\;
+$p_n \leftarrow n \cdot c_n$\;
+\For{$i \leftarrow 1$ \KwTo $k$}{
+$c_n \leftarrow \sqrt{2 - 2\sqrt{1 - c_n^2/4}}$\;
+$p_n \leftarrow 2n \cdot c_n$\;
+$n \leftarrow 2n$\;
+}
+\KwRet{$p_n $}
+}
+\caption{Polygon method to approximate $\pi$}
+\end{algorithm}
+
+  \item[b)] Using Machin's formula and Taylor series to approximate $\pi$:
+\[\frac{\pi}{4} = 4 \arctan \frac{1}{5} - \arctan \frac{1}{239}\]
+The Taylor series expansion for $\arctan(x)$ is given by:
+\[\arctan(x) = \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{2n+1}\]
+To approximate $\pi$, we can truncate the series after a finite number of terms. Here is the pseudocode for the algorithm:\\
+\begin{algorithm}[H]
+\Input{number of terms $N$}
+\Output{approximation of $\pi$}
+\BlankLine
+\Fn{\algohw{N}}{
+$\arctan(\frac{1}{5}) \leftarrow 0$\;
+$\arctan(\frac{1}{239}) \leftarrow 0$\;
+\For{$n \leftarrow 0$ \KwTo $N-1$}{
+$\arctan(\frac{1}{5}) \leftarrow \arctan(\frac{1}{5}) + \frac{(-1)^n (1/5)^{2n+1}}{2n+1}$\;
+$\arctan(\frac{1}{239}) \leftarrow \arctan(\frac{1}{239}) + \frac{(-1)^n (1/239)^{2n+1}}{2n+1}$\;
+}
+$\pi \leftarrow 4 \cdot (4 \cdot \arctan(\frac{1}{5}) - \arctan(\frac{1}{239}))$\;
+\KwRet{$\pi$}
+}
+\caption{Machin's formula to approximate $\pi$}
+\end{algorithm}
+\end{itemize}
+  \item Here is a MATLAB implementation of the polygon method to approximate $\pi$:
+\begin{lstlisting}[language=Matlab, caption=Polygon Method to Approximate Pi]
+function pi_approx = approximate_pi_polygon(n, k)
+    % n: initial number of sides (e.g., 6)
+    % k: number of iterations (doublings)
+    c_n = 2 * sin(pi / n); % side length of inscribed polygon
+    p_n = n * c_n;         % perimeter of inscribed polygon
+    for i = 1:k
+        c_n = sqrt(2 - 2 * sqrt(1 - c_n^2 / 4));
+        p_n = 2 * n * c_n;
+        n = 2 * n;
+    end
+    pi_approx = p_n;
+end
+\end{lstlisting}
+\end{enumerate}
+\end{solution}
+\vfill
+\noindent{\small Compiled with \LaTeX.}
+\end{document}
