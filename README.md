@@ -1,11 +1,14 @@
 # MATH4710J
-Numerical Methods 
+Introduction to Numerical Methods 
 ## Homework 
 LaTeX template for homework assignments $\Rightarrow$ [here](./MATH4710JFA2025(2025-2026%20Fall%20Manuel%20CHARLEMAGNE)/homework/homework1/homework1.tex) or copy from below.  
 ### ✅ Features
 - [x] Homework template in LaTeX
 - [x] Pseudocode environment using `algorithm2e`
 - [x] Code environment using `listings`
+
+<details>
+<summary>click to view</summary>
 
 ```latex
 % MATH471 Homework LaTeX Template
