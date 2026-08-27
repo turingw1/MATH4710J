@@ -179,4 +179,25 @@ end
 
 - Homework 1: due October 1st, 2025
 
+## Project
+
+Project brief $\Rightarrow$ [`project/p1.pdf`](./MATH4710JFA2025(2025-2026%20Fall%20Manuel%20CHARLEMAGNE)/project/p1.pdf)
+
+- **Topic:** neural networks — theory and applications, compared against the numerical methods taught in the course
+- **Teams:** 3 members each; presentations in **week 12** (15 min talk + 3–5 min Q&A)
+- **Weight:** 25% of the final grade
+- **Deliverables:** slides *and* source code, submitted before the presentation time
+
+Pick **one** topic, completing its *Theory* part before moving on to *Application*:
+
+| # | Topic | Dataset |
+| --- | --- | --- |
+| 1 | Pure mathematics (topology, measure theory, dual spaces) | — |
+| 2 | Activation functions (is ReLU discriminatory?) | `p1-set1.txt` |
+| 3 | Multivariate approximation | `p1-set2.txt` |
+| 4 | Integration with neural networks | provided |
+| 5 | Differential equations (vs. Runge–Kutta, Adams–Bashforth/Moulton) | — |
+
+> The datasets referenced above are distributed on Canvas and are not mirrored in this repo.
+
 
